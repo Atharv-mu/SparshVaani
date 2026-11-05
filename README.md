@@ -1,6 +1,8 @@
 # स्पर्शवाणी (SparshVaani)
 ### Making Communication More Accessible and Inclusive
 
+🌐 **Live Website:** https://sparshvaani.onrender.com/
+
 ## About the Project
 
 **SparshVaani** is a web-based communication and learning platform designed to make everyday interactions more accessible and inclusive. It brings together visual learning, speech assistance, live captions, and sign-language practice in a single, easy-to-use application.
@@ -10,33 +12,37 @@ The platform aims to support individuals with different communication needs by p
 ## Key Features
 
 ### 1. Reels – Interactive Visual Learning
+
 The Reels section provides an engaging way to learn and explore commonly used words and phrases through visual content.
 
 - Explore different categories of communication.
-- View English words and their Hindi translations.
+- View English words alongside their Hindi translations.
 - Listen to words and phrases using text-to-speech.
 - Like and save useful learning cards for quick access.
 - Navigate through content using keyboard shortcuts.
 
 ### 2. Live Captions – Speech to Text
+
 The Live Captions feature converts spoken language into on-screen text, helping users follow conversations more easily.
 
 - Generate captions from live speech.
 - Supports English (India), Hindi (India), and English (US).
-- Start and stop speech recognition as needed.
+- Start and stop speech recognition.
 - Copy or clear generated captions.
 - Display recognized text in a large, readable format.
 
 ### 3. Speak – Text to Speech
+
 The Speak section helps users communicate by converting written messages into spoken words.
 
 - Enter text and convert it into speech.
-- Adjust the speech playback speed.
+- Adjust speech playback speed.
 - Choose from ready-made communication phrases.
 - Create and save personalized phrases.
 - Use spoken output to communicate messages more conveniently.
 
 ### 4. Add Reel – Personalized Learning Content
+
 The Add Reel feature allows users to create their own visual learning cards.
 
 - Add an emoji to represent a word or phrase.
@@ -46,6 +52,7 @@ The Add Reel feature allows users to create their own visual learning cards.
 - Publish and manage personalized learning content.
 
 ### 5. Sign Mirror – Sign Language Practice
+
 Sign Mirror provides a camera-based practice space where users can refer to visual learning cards while practising gestures.
 
 - Select a visual card as a reference.
@@ -75,6 +82,7 @@ The application is developed using the following technologies:
 ### Prerequisites
 
 To use SparshVaani, you need:
+
 - A modern web browser.
 - An internet connection.
 - A microphone for live captioning and speech-related features.
@@ -88,11 +96,12 @@ To use SparshVaani, you need:
 
 For camera and microphone access, run the application using a secure connection such as HTTPS or localhost.
 
-## Live Deployment
+## Deployment
 
-SparshVaani is deployed on **Render**, making the application accessible online through a web browser.
+SparshVaani is deployed and hosted on **Render**, making the application accessible online through a web browser.
 
-**Hosting Platform:** [Render](https://render.com/)
+- **Live Website:** https://sparshvaani.onrender.com/
+- **Hosting Platform:** [Render](https://render.com/)
 
 ## Data Management
 
