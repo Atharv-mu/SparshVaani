@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>स्पर्शवाणी (SparshVaani) — Inclusive Sign & Communication Companion</title>
+  
+  <!-- Premium Modern Google Fonts (Strictly Plus Jakarta Sans & Inter for clean Metropolis feel) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', '"Inter"', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            body: ['"Inter"', 'sans-serif'],
+            mono: ['"Plus Jakarta Sans"', 'monospace']
+          },
+          colors: {
+            brand: {
+              gold: '#FFC837',
+              amber: '#FF8008',
+              violet: '#7C3AED',
+              cyan: '#06B6D4',
+              rose: '#F43F5E',
+              darkBg: '#080413'
+            }
+          },
+          animation: {
+            'aurora-1': 'aurora1 20s ease-in-out infinite alternate',
+            'aurora-2': 'aurora2 25s ease-in-out infinite alternate',
+            'aurora-3': 'aurora3 18s ease-in-out infinite alternate',
+            'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+            'float-slow': 'floatSlow 5s ease-in-out infinite',
+            'bounce-subtle': 'bounceSubtle 2s infinite'
+          },
+          keyframes: {
+            aurora1: {
+              '0%': { transform: 'translate(-10vw, -10vh) scale(1)' },
+              '100%': { transform: 'translate(10vw, 15vh) scale(1.3)' }
+            },
+            aurora2: {
+              '0%': { transform: 'translate(15vw, 20vh) scale(1.2)' },
+              '100%': { transform: 'translate(-12vw, -10vh) scale(0.9)' }
+            },
+            aurora3: {
+              '0%': { transform: 'translate(5vw, -15vh) scale(0.95)' },
+              '100%': { transform: 'translate(-8vw, 12vh) scale(1.35)' }
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.35', filter: 'drop-shadow(0 0 20px rgba(255,128,8,0.3))' },
+              '50%': { opacity: '0.8', filter: 'drop-shadow(0 0 45px rgba(255,200,55,0.7))' }
+            },
+            floatSlow: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-14px) rotate(4deg)' }
+            },
+            bounceSubtle: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-6px)' }
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Styling & Utilities */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #05020c;
+    }
+    h1, h2, h3, h4, h5, h6, .font-display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .glass-card {
+      background: rgba(18, 10, 36, 0.65);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #FFF176 0%, #FFB74D 40%, #FFA000 80%, #FF8F00 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-glow {
+      box-shadow: 0 10px 30px -5px rgba(255, 179, 0, 0.4);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 200, 55, 0.6);
+    }
+  </style>
+
+  <!-- React 18, ReactDOM, HTM -->
+  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/htm@3.1.1/dist/htm.js"></script>
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body class="bg-[#080413] text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-200 overflow-hidden min-h-screen">
+
+  <div id="root"></div>
+
+  <script>
+    (function () {
+      "use strict";
+      var useState = React.useState;
+      var useEffect = React.useEffect;
+      var useRef = React.useRef;
+      var useMemo = React.useMemo;
+      var h = htm.bind(React.createElement);
+
+      var SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+      // Local Storage hook
+      function useStore(key, defaultValue) {
+        var state = useState(function () {
+          try {
+            var item = localStorage.getItem(key);
+            return item ? JSON.parse(item) : defaultValue;
+          } catch (e) {
+            return defaultValue;
+          }
+        });
+        var val = state[0];
+        var setVal = state[1];
+
+        useEffect(function () {
+          try {
+            localStorage.setItem(key, JSON.stringify(val));
+          } catch (e) {}
+        }, [key, val]);
+        return [val, setVal];
+      }
+
+      function toggleArrayItem(setter, item) {
+        setter(function (prev) {
+          return prev.includes(item) ? prev.filter(function (x) { return x !== item; }) : prev.concat([item]);
+        });
+      }
+      // Extended Baseline dictionary with 100+ Emojis & Phrases
+      var SignData = [
+        ["Basics", 265, "👋|Hello|नमस्ते;🙏|Thank you|धन्यवाद;🙇|Sorry|माफ़ कीजिए;🤲|Please|कृपया;👍|Yes|हाँ;👎|No|नहीं;🤝|Nice to meet you|आपसे मिलकर अच्छा लगा;👋|Goodbye|अलविदा;🌅|Good morning|सुप्रभात;🌙|Good night|शुभ रात्रि;❓|What is your name?|आपका नाम क्या है?;🙋|My name is|मेरा नाम है;🤔|I do not understand|मुझे समझ नहीं आया;🔁|Repeat please|दोबारा बोलिए;👏|Bravo|शाबाश;🎉|Congratulations|बधाई हो;👌|Perfect|बिल्कुल ठीक"],
+        ["Needs", 190, "💧|Water|पानी;🍽️|Hungry|भूख;🥛|Thirsty|प्यासा;🚻|Toilet|शौचालय;🆘|Help|मदद;🛌|Sleep|सोना;💊|Medicine|दवा;💰|Money|पैसे;📱|Phone|फ़ोन;🔌|Charger|चार्जर;⏳|Wait|रुको;🚶|Go|जाओ;🛑|Stop|रुकिए;🪑|Sit|बैठो;🧼|Wash hands|हाथ धोओ;🛀|Bath|नहाना;🧹|Clean|सफ़ाई;👕|Clothes|कपड़े"],
+        ["Emergency", 355, "🚑|Ambulance|एम्बुलेंस;🚨|Police|पुलिस;🔥|Fire|आग;🏥|Hospital|अस्पताल;👨‍⚕️|Doctor|डॉक्टर;😣|Pain|दर्द;🤒|Fever|बुखार;⚠️|Danger|खतरा;🩸|Blood|खून;🩹|Bandage|पट्टी;💊|Injection|इंजैक्शन;🗣️|Shout|चिल्लाओ"],
+        ["Feelings", 320, "😊|Happy|खुश;😢|Sad|उदास;😠|Angry|गुस्सा;😨|Scared|डर;😴|Tired|थका हुआ;❤️|Love|प्यार;🤗|Proud|गर्व;😕|Confused|उलझन;😌|Calm|शांत;🥳|Excited|उत्साहित;😳|Shy|शर्मीला;🤕|Unwell|तबीयत ठीक नहीं;🤩|Amazed|अद्भुत;🤯|Shocked|हैरान;😴|Sleepy|नींद"],
+        ["Family", 30, "👨‍👩‍👧|Family|परिवार;👩|Mother|माँ;👨|Father|पिता;👦|Brother|भाई;👧|Sister|बहन;👵|Grandmother|दादी;👴|Grandfather|दादा;👶|Baby|बच्चा;🧑‍🤝‍🧑|Friend|दोस्त;👨‍🏫|Teacher|शिक्षक;🧑‍🎓|Student|छात्र;🏘️|Neighbour|पड़ोसी;👨‍💼|Boss|बॉस;👩‍⚕️|Nurse|नर्स"],
+        ["Food", 140, "🍚|Rice|चावल;🫓|Roti|रोटी;🥛|Milk|दूध;☕|Tea|चाय;🍎|Apple|सेब;🍌|Banana|केला;🥔|Potato|आलू;🍬|Sweet|मिठाई;🥗|Vegetables|सब्ज़ी;🍳|Egg|अंडा;🥭|Mango|आम;🍕|Pizza|पिज़्ज़ा;🍦|Ice Cream|आइसक्रीम;🧃|Juice|जूस;🧀|Cheese|पनीर;🍞|Bread|ब्रेड"],
+        ["Animals", 160, "🐶|Dog|कुत्ता;🐱|Cat|बिल्ली;🐮|Cow|गाय;🐘|Elephant|हाथी;🦁|Lion|शेर;🐵|Monkey|बंदर;🐦|Bird|पक्षी;🐍|Snake|सांप;🐎|Horse|घोड़ा;🐬|Dolphin|डॉल्फिन"],
+        ["Places", 215, "🏠|Home|घर;🏫|School|स्कूल;🏢|Office|दफ़्तर;🛒|Market|बाज़ार;🚌|Bus|बस;🚆|Train|ट्रेन;🛕|Temple|मंदिर;🏦|Bank|बैंक;🌳|Park|पार्क;🏪|Shop|दुकान;✈️|Airport|हवाई अड्डा;🏨|Hotel|होटल"],
+        ["Numbers", 250, "1️⃣|One|एक;2️⃣|Two|दो;3️⃣|Three|तीन;4️⃣|Four|चार;5️⃣|Five|पाँच;6️⃣|Six|छह;7️⃣|Seven|सात;8️⃣|Eight|आठ;9️⃣|Nine|नौ;🔟|Ten|दस;💯|Hundred|सौ"],
+        ["Time", 45, "📅|Today|आज;🌤️|Tomorrow|कल;🌙|Yesterday|बीता कल;🕘|Now|अभी;⌛|Later|बाद में;⏰|Time|समय;🌞|Day|दिन;🌌|Night|रात;⏱️|Minute|मिनट"],
+        ["Actions", 170, "🍴|Eat|खाओ;🥤|Drink|पियो;🫴|Come|आओ;👀|Look|देखो;🏃|Run|भागो;💃|Dance|नाचो;✍️|Write|लिखो;📖|Read|पढ़ो;🎨|Draw|चित्र बनाओ;🎧|Listen|सुनो;🗣️|Speak|बोलो"]
+      ];
+
+      var BASE_REELS = [];
+      SignData.forEach(function (group) {
+        var cat = group[0];
+        var hue = group[1];
+        var str = group[2];
+        str.split(";").forEach(function (item) {
+          var parts = item.split("|");
+          BASE_REELS.push({ e: parts[0], w: parts[1], hi: parts[2], c: cat, h: hue });
+        });
+      });
+
+      var CATEGORIES = ["All", "Mine", "Saved"].concat(SignData.map(function (g) { return g[0]; }));
+
+      var NAV_ITEMS = [
+        { id: "reels", icon: "ph-film-strip", label: "Reels" },
+        { id: "cap", icon: "ph-waveform", label: "Captions" },
+        { id: "say", icon: "ph-speaker-high", label: "Speak & AAC" },
+        { id: "add", icon: "ph-plus-circle", label: "Add Reel" },
+        { id: "cam", icon: "ph-camera", label: "Sign Mirror" }
+      ];
+
+      var QUICK_TILES = [
+        ["🍽️", "Hungry"], ["💧", "Water"], ["🚻", "Toilet"], ["🆘", "Help me"],
+        ["😊", "Happy"], ["😢", "Sad"], ["😣", "Pain"], ["👨‍👩‍👧", "Family"],
+        ["👨‍⚕️", "Doctor"], ["🏠", "Home"], ["👍", "Yes"], ["👎", "No"],
+        ["💊", "Medicine"], ["😴", "Sleep"], ["🥛", "Thirsty"], ["🛑", "Stop"],
+        ["⏳", "Wait"], ["📱", "Phone"], ["🚗", "Taxi"], ["🤝", "Friend"]
+      ];
+
+      function speakText(text, rate) {
+        if (!rate) rate = 1;
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        var u = new SpeechSynthesisUtterance(text);
+        u.lang = /[\u0900-\u097F]/.test(text) ? "hi-IN" : "en-IN";
+        u.rate = rate;
+        window.speechSynthesis.speak(u);
+      }
+
+      function Header(props) {
+        return h`
+          <header class="mb-8 relative">
+            <div class="inline-flex items-center gap-2 glass-pill px-3 py-1 rounded-full text-[11px] font-mono font-bold text-amber-300 uppercase tracking-widest mb-3 border border-amber-400/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+              स्पर्शवाणी (SparshVaani) Accessibility Studio
+            </div>
+            <h1 class="text-3xl md:text-5xl font-display font-extrabold tracking-tight text-white mb-2 uppercase">
+              ${props.title} <span class="gold-gradient-text italic font-display">${props.highlight}</span>
+            </h1>
+            <p class="text-slate-400 font-medium text-sm md:text-base tracking-wide max-w-xl">${props.subtitle}</p>
+          </header>
+        `;
+      }
+      // --- ROBUST REELS COMPONENT WITH AUDIO SPEAK FUNCTIONALITY ---
+      function Reels(props) {
+        var activeIndexState = useState(0);
+        var activeIndex = activeIndexState[0];
+        var setActiveIndex = activeIndexState[1];
+
+        var autoAudioState = useState(true);
+        var autoAudio = autoAudioState[0];
+        var setAutoAudio = autoAudioState[1];
+
+        var breakModalRef = useRef();
+        var seenSet = useRef(new Set());
+        var touchStartY = useRef(0);
+
+        // Reset index when category changes
+        useEffect(function () {
+          setActiveIndex(0);
+        }, [props.cat]);
+
+        var total = props.list.length;
+        var currentReel = props.list[activeIndex];
+
+        // Trigger Speech Sound when Reel changes
+        useEffect(function () {
+          if (currentReel && autoAudio) {
+            speakText(`${currentReel.w}. ${currentReel.hi}`);
+          }
+        }, [activeIndex, currentReel, autoAudio]);
+
+        var goNext = function () {
+          if (total === 0) return;
+          var nextIdx = (activeIndex + 1) % total;
+          setActiveIndex(nextIdx);
+          checkBreak(nextIdx);
+        };
+
+        var goPrev = function () {
+          if (total === 0) return;
+          var prevIdx = (activeIndex - 1 + total) % total;
+          setActiveIndex(prevIdx);
+        };
+
+        var checkBreak = function (idx) {
+          var item = props.list[idx];
+          if (item && !seenSet.current.has(item.w)) {
+            seenSet.current.add(item.w);
+            if (seenSet.current.size > 0 && seenSet.current.size % 15 === 0 && breakModalRef.current) {
+              breakModalRef.current.showModal();
+            }
+          }
+        };
+
+        // Keyboard navigation
+        useEffect(function () {
+          var handleKeyDown = function (e) {
+            if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement.tagName)) return;
+            if (["ArrowDown", "PageDown", "j", "J"].includes(e.key)) {
+              e.preventDefault();
+              goNext();
+            } else if (["ArrowUp", "PageUp", "k", "K"].includes(e.key)) {
+              e.preventDefault();
+              goPrev();
+            } else if ([" ", "s", "S"].includes(e.key) && currentReel) {
+              e.preventDefault();
+              speakText(`${currentReel.w}. ${currentReel.hi}`);
+            }
+          };
+          document.addEventListener("keydown", handleKeyDown);
+          return function () { document.removeEventListener("keydown", handleKeyDown); };
+        }, [activeIndex, total, currentReel]);
+
+        // Touch Swipe
+        var handleTouchStart = function (e) {
+          touchStartY.current = e.touches[0].clientY;
+        };
+
+        var handleTouchEnd = function (e) {
+          var touchEndY = e.changedTouches[0].clientY;
+          var diff = touchStartY.current - touchEndY;
+          if (Math.abs(diff) > 40) {
+            if (diff > 0) goNext();
+            else goPrev();
+          }
+        };
+
+        return h`
+          <div 
+            onTouchStart=${handleTouchStart}
+            onTouchEnd=${handleTouchEnd}
+            class="relative w-full h-full flex flex-col justify-between overflow-hidden bg-[#05020c] select-none"
+          >
+            <!-- Category Filter Bar & Auto-Sound Toggle -->
+            <div class="absolute top-5 left-0 right-0 z-30 flex items-center justify-between px-8 py-3 bg-gradient-to-b from-[#05020c] via-[#05020c]/80 to-transparent backdrop-blur-md">
+              <div class="flex gap-2.5 overflow-x-auto custom-scrollbar py-1">
+                ${CATEGORIES.map(function (c) {
+                  return h`
+                    <button 
+                      key=${c} 
+                      onClick=${function () { props.setCat(c); }}
+                      class=${`px-4 py-2 rounded-full text-xs font-mono font-bold uppercase tracking-wider transition-all border ${
+                        props.cat === c 
+                          ? 'bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 border-amber-300 text-slate-950 gold-glow scale-105' 
+                          : 'glass-pill text-slate-300 border-white/10 hover:border-amber-400/50 hover:bg-white/10'
+                      }`}
+                    >
+                      ${c}
+                    </button>
+                  `;
+                })}
+              </div>
+
+              <!-- Auto Audio Speech Toggle -->
+              <button 
+                onClick=${function () { setAutoAudio(!autoAudio); }}
+                class=${`ml-4 px-3.5 py-2 rounded-full text-xs font-mono font-bold flex items-center gap-2 transition-all border ${
+                  autoAudio 
+                    ? 'glass-pill bg-amber-400/15 text-amber-300 border-amber-400/40 shadow-lg shadow-amber-500/10' 
+                    : 'glass-pill text-slate-400 border-white/10 opacity-70'
+                }`}
+                title="Toggle Auto Speech Sound on Reel Change"
+              >
+                <i class=${`ph-bold ${autoAudio ? 'ph-speaker-high text-amber-400 text-base animate-pulse' : 'ph-speaker-slash text-base'}`}></i>
+                <span class="hidden sm:inline">${autoAudio ? 'Voice Auto ON' : 'Voice Auto OFF'}</span>
+              </button>
+            </div>
+
+            <!-- Vertical Action Controls -->
+            <div class="absolute right-6 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-3">
+              <button 
+                onClick=${goPrev}
+                class="w-13 h-13 rounded-full glass-card flex items-center justify-center text-white hover:bg-gradient-to-tr hover:from-amber-400 hover:to-amber-500 hover:text-slate-950 transition-all border border-white/20 shadow-2xl active:scale-90"
+                title="Previous Reel (Up / K)"
+              >
+                <i class="ph-bold ph-caret-up text-xl"></i>
+              </button>
+              <button 
+                onClick=${goNext}
+                class="w-13 h-13 rounded-full glass-card flex items-center justify-center text-white hover:bg-gradient-to-tr hover:from-amber-400 hover:to-amber-500 hover:text-slate-950 transition-all border border-white/20 shadow-2xl active:scale-90"
+                title="Next Reel (Down / J)"
+              >
+                <i class="ph-bold ph-caret-down text-xl"></i>
+              </button>
+            </div>
+
+            <!-- Active Reel Display Card -->
+            ${currentReel ? (function () {
+              var isLiked = props.liked.includes(currentReel.w);
+              var isSaved = props.saved.includes(currentReel.w);
+              var customVideo = props.vids[currentReel.w];
+
+              return h`
+                <div 
+                  key=${currentReel.w + activeIndex}
+                  class="w-full h-full flex flex-col items-center justify-center text-center p-8 relative overflow-hidden transition-all duration-700"
+                  style=${{
+                    background: `radial-gradient(circle at center, hsl(${currentReel.h} 85% 20%), hsl(${(currentReel.h + 80) % 360} 75% 5%))`
+                  }}
+                >
+                  <!-- Background Glow Orb -->
+                  <div class="absolute w-[600px] h-[600px] rounded-full bg-white/10 blur-[150px] pointer-events-none animate-pulse-glow"></div>
+
+                  <!-- Visual Accent Lines -->
+                  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent pointer-events-none"></div>
+
+                  <!-- Category Tag & Progress Indicator -->
+                  <div class="absolute top-24 left-8 right-8 flex items-center justify-between text-xs font-mono font-bold uppercase tracking-widest z-20">
+                    <span class="glass-pill px-4 py-2 rounded-full text-amber-300 border border-amber-400/40 shadow-lg shadow-amber-500/10 flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                      ${currentReel.c}
+                    </span>
+                    <span class="glass-pill px-4 py-2 rounded-full text-slate-200 border border-white/15">
+                      ${activeIndex + 1} <span class="text-slate-500">/</span> ${total}
+                    </span>
+                  </div>
+
+                  <!-- Reel Visual Content -->
+                  <div class="my-auto flex flex-col items-center justify-center z-10 max-w-xl w-full">
+                    ${customVideo ? h`
+                      <video 
+                        class="w-full max-h-[40vh] object-cover rounded-3xl shadow-2xl border border-white/20 glass-card"
+                        src=${customVideo} 
+                        autoplay 
+                        muted 
+                        loop 
+                        playsInline 
+                        controls
+                      ></video>
+                    ` : h`
+                      <button 
+                        onClick=${function () { speakText(`${currentReel.w}. ${currentReel.hi}`); }}
+                        class="text-[140px] md:text-[190px] leading-none mb-4 filter drop-shadow-[0_30px_50px_rgba(0,0,0,0.7)] animate-float-slow hover:scale-110 active:scale-95 transition-all cursor-pointer select-none"
+                        title="Click symbol to hear pronunciation"
+                      >
+                        ${currentReel.e}
+                      </button>
+                    `}
+
+                    <!-- Clean Uniform Typography -->
+                    <h2 class="text-5xl md:text-8xl font-display font-extrabold text-white tracking-tight mb-2 drop-shadow-2xl">
+                      ${currentReel.w}
+                    </h2>
+                    <p class="text-2xl md:text-4xl font-display font-bold text-amber-300/90 tracking-wide mb-10 drop-shadow-md">
+                      ${currentReel.hi}
+                    </p>
+
+                    <!-- Interactive Reel Buttons -->
+                    <div class="flex flex-wrap items-center justify-center gap-3">
+                      <button 
+                        onClick=${function () { speakText(`${currentReel.w}. ${currentReel.hi}`); }}
+                        class="glass-pill px-6 py-3.5 rounded-2xl text-sm font-bold text-white hover:bg-gradient-to-r hover:from-amber-400 hover:to-amber-500 hover:text-slate-950 transition-all flex items-center gap-2.5 border border-white/20 shadow-2xl active:scale-95 group"
+                      >
+                        <i class="ph-bold ph-speaker-high text-amber-400 group-hover:text-slate-950 text-lg transition-colors"></i> Hear Sound
+                      </button>
+
+                      <button 
+                        onClick=${function () { props.onMirrorPractice(currentReel); }}
+                        class="glass-pill px-6 py-3.5 rounded-2xl text-sm font-bold text-white hover:bg-white/20 transition-all flex items-center gap-2.5 border border-white/20 shadow-2xl active:scale-95"
+                      >
+                        <i class="ph-bold ph-camera text-cyan-400 text-lg"></i> Practice
+                      </button>
+
+                      <button 
+                        onClick=${function () { toggleArrayItem(props.setLiked, currentReel.w); }}
+                        class=${`px-6 py-3.5 rounded-2xl text-sm font-bold transition-all flex items-center gap-2.5 border shadow-2xl active:scale-95 ${
+                          isLiked 
+                            ? 'bg-rose-500 border-rose-400 text-white shadow-rose-500/40' 
+                            : 'glass-pill text-white border-white/20 hover:bg-white/20'
+                        }`}
+                      >
+                        <i class=${`ph-bold ${isLiked ? 'ph-heart-fill text-white' : 'ph-heart text-rose-400'} text-lg`}></i> 
+                        ${isLiked ? 'Liked' : 'Like'}
+                      </button>
+
+                      <button 
+                        onClick=${function () { toggleArrayItem(props.setSaved, currentReel.w); }}
+                        class=${`px-6 py-3.5 rounded-2xl text-sm font-bold transition-all flex items-center gap-2.5 border shadow-2xl active:scale-95 ${
+                          isSaved 
+                            ? 'bg-amber-400 border-amber-300 text-slate-950 shadow-amber-500/40 font-extrabold' 
+                            : 'glass-pill text-white border-white/20 hover:bg-white/20'
+                        }`}
+                      >
+                        <i class=${`ph-bold ${isSaved ? 'ph-star-fill' : 'ph-star text-amber-400'} text-lg`}></i> 
+                        ${isSaved ? 'Saved' : 'Save'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              `;
+            })() : h`
+              <div class="h-full w-full flex flex-col items-center justify-center p-8 text-center glass-card">
+                <i class="ph-duotone ph-folder-open text-6xl text-amber-400 mb-4"></i>
+                <h3 class="text-2xl font-display font-bold mb-2">No Reels Found</h3>
+                <p class="text-slate-400 max-w-sm">
+                  ${props.cat === "Saved" ? "Save your favorite reels using the star button to view them here!" : "No custom reels added in this section yet."}
+                </p>
+              </div>
+            `}
+
+            <!-- Rest Break Modal -->
+            <dialog ref=${breakModalRef} class="glass-card p-8 rounded-3xl max-w-sm w-full text-center border border-amber-500/40 text-white backdrop:bg-slate-950/85 shadow-2xl">
+              <div class="w-16 h-16 rounded-full bg-amber-400/10 text-amber-400 flex items-center justify-center mx-auto mb-4 text-3xl">
+                <i class="ph-bold ph-cup"></i>
+              </div>
+              <h3 class="text-2xl font-display font-bold text-amber-300 mb-2">Take a Rest Break!</h3>
+              <p class="text-slate-300 text-sm mb-6 leading-relaxed">
+                You've completed 15 reels! Take a moment to drink water and rest your eyes.
+              </p>
+              <button 
+                onClick=${function () { breakModalRef.current.close(); }}
+                class="w-full py-3.5 rounded-xl font-bold bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/30 hover:scale-[1.02] transition-all"
+              >
+                I'm Ready to Continue
+              </button>
+            </dialog>
+          </div>
+        `;
+      }
+
+      // --- CAPTIONS COMPONENT ---
+      function Captions(props) {
+        var finalTextState = useState("");
+        var finalText = finalTextState[0];
+        var setFinalText = finalTextState[1];
+
+        var interimTextState = useState("");
+        var interimText = interimTextState[0];
+        var setInterimText = interimTextState[1];
+
+        var isListeningState = useState(false);
+        var isListening = isListeningState[0];
+        var setIsListening = isListeningState[1];
+
+        var languageState = useState("en-IN");
+        var language = languageState[0];
+        var setLanguage = languageState[1];
+
+        var statusMsgState = useState("Speech recognition works best in Chrome or Edge browsers.");
+        var statusMsg = statusMsgState[0];
+        var setStatusMsg = statusMsgState[1];
+
+        var recogRef = useRef(null);
+        var boxRef = useRef(null);
+
+        var stopRecog = function () {
+          var r = recogRef.current;
+          recogRef.current = null;
+          if (r) {
+            r.onend = null;
+            try { r.stop(); } catch (e) {}
+          }
+        };
+
+        useEffect(function () { return stopRecog; }, []);
+
+        useEffect(function () {
+          if (boxRef.current) {
+            boxRef.current.scrollTop = boxRef.current.scrollHeight;
+          }
+        }, [finalText, interimText]);
+
+        var toggleListening = function () {
+          if (isListening) {
+            stopRecog();
+            setIsListening(false);
+            return;
+          }
+
+          if (!SpeechRec) {
+            setStatusMsg("Speech recognition is not supported on this browser. Try Chrome or Edge.");
+            return;
+          }
+
+          var r = new SpeechRec();
+          r.lang = language;
+          r.continuous = true;
+          r.interimResults = true;
+
+          r.onresult = function (e) {
+            var tempInterim = "";
+            var tempFinal = "";
+            for (var i = e.resultIndex; i < e.results.length; i++) {
+              var transcript = e.results[i][0].transcript;
+              if (e.results[i].isFinal) {
+                tempFinal += transcript + " ";
+              } else {
+                tempInterim += transcript;
+              }
+            }
+            if (tempFinal) setFinalText(function (prev) { return prev + tempFinal; });
+            setInterimText(tempInterim);
+          };
+
+          r.onerror = function (e) {
+            setStatusMsg(e.error === "not-allowed" ? "Microphone access blocked. Enable permissions in browser header." : ("Error: " + e.error));
+          };
+
+          r.onend = function () {
+            if (recogRef.current) {
+              try { r.start(); } catch (err) {}
+            }
+          };
+
+          recogRef.current = r;
+          try {
+            r.start();
+            setIsListening(true);
+            setStatusMsg("Listening active... speak clearly into your mic.");
+          } catch (err) {
+            stopRecog();
+            setIsListening(false);
+          }
+        };
+
+        var copyText = function () {
+          try {
+            navigator.clipboard.writeText(finalText).then(
+              function () { props.setToast("Captions copied!"); },
+              function () { props.setToast("Copy unavailable."); }
+            );
+          } catch (e) {
+            props.setToast("Copy unavailable.");
+          }
+        };
+
+        return h`
+          <div class="h-full overflow-y-auto p-6 md:p-10 custom-scrollbar">
+            <div class="max-w-4xl mx-auto">
+              <${Header} 
+                title="Live Speech" 
+                highlight="Captions" 
+                subtitle="Real-time Speech-to-Text transcriptions with full-screen banner display." 
+              />
+
+              <div class="glass-card p-6 md:p-8 rounded-3xl mb-6 shadow-2xl">
+                <!-- Controls Header -->
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-6 border-b border-white/10">
+                  <div class="flex items-center gap-3">
+                    <select 
+                      value=${language} 
+                      onChange=${function (e) { setLanguage(e.target.value); }}
+                      class="glass-pill px-4 py-2.5 rounded-xl text-xs font-mono font-bold text-white bg-slate-900/80 border border-white/15 focus:outline-none focus:border-amber-400"
+                    >
+                      <option value="en-IN" class="bg-slate-900">English (India)</option>
+                      <option value="hi-IN" class="bg-slate-900">हिन्दी (India)</option>
+                      <option value="en-US" class="bg-slate-900">English (US)</option>
+                    </select>
+
+                    <button 
+                      onClick=${toggleListening}
+                      class=${`px-6 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all shadow-lg active:scale-95 ${
+                        isListening 
+                          ? 'bg-rose-500 text-white shadow-rose-500/30 animate-pulse' 
+                          : 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-amber-500/30 hover:scale-105'
+                      }`}
+                    >
+                      <i class=${`ph-bold ${isListening ? 'ph-stop-circle' : 'ph-microphone'} text-lg`}></i>
+                      ${isListening ? "Stop Listening" : "Start Listening"}
+                    </button>
+                  </div>
+
+                  <div class="flex items-center gap-2">
+                    <button 
+                      onClick=${copyText}
+                      class="glass-pill px-4 py-2 rounded-xl text-xs font-mono font-bold text-white hover:bg-white/15 transition-all flex items-center gap-2 border border-white/15"
+                    >
+                      <i class="ph-bold ph-copy"></i> Copy
+                    </button>
+                    <button 
+                      onClick=${function () { setFinalText(""); setInterimText(""); }}
+                      class="glass-pill px-4 py-2 rounded-xl text-xs font-mono font-bold text-slate-300 hover:text-white hover:bg-white/15 transition-all border border-white/15"
+                    >
+                      <i class="ph-bold ph-trash"></i> Clear
+                    </button>
+                    <button 
+                      onClick=${function () { props.onShowBig(finalText.trim()); }}
+                      class="glass-pill px-4 py-2 rounded-xl text-xs font-mono font-bold text-amber-300 hover:bg-amber-400/20 transition-all border border-amber-400/30"
+                    >
+                      <i class="ph-bold ph-arrows-out-cardinal"></i> Big View
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Text Display Box -->
+                <div 
+                  ref=${boxRef}
+                  class=${`min-h-[300px] max-h-[50vh] overflow-y-auto p-6 rounded-2xl bg-slate-950/60 border transition-all text-2xl md:text-3xl font-medium leading-relaxed custom-scrollbar ${
+                    isListening ? 'border-amber-400/50 shadow-[0_0_35px_rgba(255,200,55,0.15)]' : 'border-white/10'
+                  }`}
+                >
+                  ${finalText || interimText ? h`
+                    <div>
+                      <span class="text-slate-100">${finalText}</span>
+                      <span class="text-amber-400/80 italic font-mono">${interimText}</span>
+                    </div>
+                  ` : h`
+                    <div class="h-full flex flex-col items-center justify-center text-slate-500 py-12">
+                      <i class="ph-duotone ph-microphone-stage text-5xl mb-3 text-slate-600"></i>
+                      <p class="text-base font-semibold">Click "Start Listening" and begin speaking...</p>
+                    </div>
+                  `}
+                </div>
+              </div>
+
+              <p class="text-xs font-mono font-semibold text-slate-400 flex items-center gap-2">
+                <i class="ph-bold ph-info text-amber-400 text-sm"></i>
+                ${statusMsg}
+              </p>
+            </div>
+          </div>
+        `;
+      }
+
+      // --- SPEAK & AAC COMPONENT ---
+      function Speak(props) {
+        var textState = useState("");
+        var text = textState[0];
+        var setText = textState[1];
+
+        var rateState = useState(1);
+        var rate = rateState[0];
+        var setRate = rateState[1];
+
+        var newPhraseState = useState("");
+        var newPhrase = newPhraseState[0];
+        var setNewPhrase = newPhraseState[1];
+
+        var handleSpeak = function () {
+          if (!text.trim()) return;
+          speakText(text.trim(), rate);
+        };
+
+        var addPhrase = function () {
+          var cleaned = newPhrase.trim().slice(0, 80);
+          if (cleaned && props.phrases.length < 30) {
+            props.setPhrases(props.phrases.concat([cleaned]));
+            setNewPhrase("");
+            props.setToast("Custom phrase saved!");
+          }
+        };
+
+        var appendWord = function (word) {
+          setText(function (prev) { return (prev + " " + word.toLowerCase()).trim(); });
+        };
+
+        return h`
+          <div class="h-full overflow-y-auto p-6 md:p-10 custom-scrollbar">
+            <div class="max-w-4xl mx-auto">
+              <${Header} 
+                title="Vocalize &" 
+                highlight="AAC Board" 
+                subtitle="Express phrases via text-to-speech or instant AAC tap tiles." 
+              />
+
+              <div class="glass-card p-6 md:p-8 rounded-3xl mb-8 shadow-2xl">
+                <textarea 
+                  value=${text}
+                  onChange=${function (e) { setText(e.target.value); }}
+                  placeholder="Type anything here to speak out loud..."
+                  maxLength="500"
+                  class="w-full h-32 p-4 rounded-2xl bg-slate-950/60 border border-white/15 text-white text-xl placeholder:text-slate-500 focus:outline-none focus:border-amber-400 transition-all custom-scrollbar resize-none mb-4"
+                ></textarea>
+
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                  <div class="flex items-center gap-3">
+                    <button 
+                      onClick=${handleSpeak}
+                      class="px-6 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-lg shadow-amber-500/20 hover:scale-105 transition-all flex items-center gap-2 active:scale-95"
+                    >
+                      <i class="ph-bold ph-speaker-high text-lg"></i> Speak
+                    </button>
+
+                    <button 
+                      onClick=${function () { props.onShowBig(text.trim()); }}
+                      class="glass-pill px-4 py-3 rounded-xl text-xs font-mono font-bold text-amber-300 hover:bg-amber-400/20 transition-all border border-amber-400/30 flex items-center gap-2"
+                    >
+                      <i class="ph-bold ph-arrows-out-cardinal"></i> Show Big
+                    </button>
+
+                    <button 
+                      onClick=${function () { setText(function (prev) { return prev.trim().split(" ").slice(0, -1).join(" "); }); }}
+                      class="glass-pill px-4 py-3 rounded-xl text-xs font-mono font-bold text-slate-300 hover:text-white hover:bg-white/15 transition-all border border-white/15"
+                    >
+                      Undo
+                    </button>
+                  </div>
+
+                  <div class="flex items-center gap-3 glass-pill px-4 py-2 rounded-xl border border-white/10">
+                    <span class="text-xs font-mono font-bold text-slate-400">Speed:</span>
+                    <input 
+                      type="range" 
+                      min="0.6" 
+                      max="1.3" 
+                      step="0.1" 
+                      value=${rate} 
+                      onChange=${function (e) { setRate(Number(e.target.value)); }}
+                      class="w-24 accent-amber-400 cursor-pointer"
+                    />
+                    <span class="text-xs font-mono font-bold text-amber-300">${rate}x</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AAC Quick Soundboard Tiles -->
+              <h3 class="text-lg font-display font-bold text-white mb-4 flex items-center gap-2">
+                <i class="ph-bold ph-grid-four text-amber-400"></i> Instant AAC Communication Tiles
+              </h3>
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5 mb-10">
+                ${QUICK_TILES.map(function (tile) {
+                  var emoji = tile[0];
+                  var label = tile[1];
+                  return h`
+                    <button 
+                      key=${label}
+                      onClick=${function () { appendWord(label); }}
+                      class="glass-card p-5 rounded-2xl flex flex-col items-center justify-center gap-2.5 hover:border-amber-400/80 hover:bg-white/10 hover:scale-105 hover:-translate-y-1 transition-all group border border-white/10 shadow-xl active:scale-95"
+                    >
+                      <span class="text-4xl group-hover:scale-110 transition-transform filter drop-shadow-md">${emoji}</span>
+                      <span class="text-xs font-bold text-slate-200 group-hover:text-amber-300 tracking-wide">${label}</span>
+                    </button>
+                  `;
+                })}
+              </div>
+
+              <!-- Frequent Phrases -->
+              <h3 class="text-lg font-display font-bold text-white mb-4 flex items-center gap-2">
+                <i class="ph-bold ph-chat-teardrop-text text-amber-400"></i> Saved Quick Phrases
+              </h3>
+              <div class="flex flex-wrap gap-2.5 mb-6">
+                ${props.phrases.map(function (phrase, idx) {
+                  return h`
+                    <button 
+                      key=${phrase + idx} 
+                      onClick=${function () { speakText(phrase, rate); }}
+                      onContextMenu=${function (e) {
+                        e.preventDefault();
+                        props.setPhrases(props.phrases.filter(function (_, j) { return j !== idx; }));
+                        props.setToast("Phrase removed.");
+                      }}
+                      class="glass-pill px-4 py-2.5 rounded-full text-xs font-bold text-slate-200 hover:text-amber-300 hover:border-amber-400/50 transition-all border border-white/15 active:scale-95"
+                      title="Click to speak. Right-click to delete."
+                    >
+                      ${phrase}
+                    </button>
+                  `;
+                })}
+              </div>
+
+              <!-- Add Phrase Input -->
+              <div class="flex gap-3">
+                <input 
+                  type="text" 
+                  value=${newPhrase} 
+                  onChange=${function (e) { setNewPhrase(e.target.value); }}
+                  onKeyDown=${function (e) { if (e.key === "Enter") addPhrase(); }}
+                  placeholder="Type a new phrase to save..."
+                  maxLength="80"
+                  class="flex-1 px-4 py-3 rounded-2xl bg-slate-950/60 border border-white/15 text-white text-sm placeholder:text-slate-500 focus:outline-none focus:border-amber-400"
+                />
+                <button 
+                  onClick=${addPhrase}
+                  class="glass-pill px-6 py-3 rounded-2xl text-xs font-mono font-bold text-amber-300 hover:bg-amber-400/20 transition-all border border-amber-400/30 flex items-center gap-2"
+                >
+                  <i class="ph-bold ph-plus"></i> Add
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // --- ADD REEL COMPONENT ---
+      function AddReel(props) {
+        var formState = useState({ e: "", w: "", hi: "" });
+        var form = formState[0];
+        var setForm = formState[1];
+
+        var fileRef = useRef();
+
+        var updateField = function (field, value) {
+          setForm(function (prev) {
+            var updated = Object.assign({}, prev);
+            updated[field] = value;
+            return updated;
+          });
+        };
+
+        var handleSubmit = function () {
+          var word = form.w.trim().slice(0, 40);
+          if (!word) {
+            props.setToast("English word is required.");
+            return;
+          }
+
+          var file = fileRef.current && fileRef.current.files && fileRef.current.files[0];
+          if (file) {
+            var objUrl = URL.createObjectURL(file);
+            props.setVids(function (prev) {
+              var updated = Object.assign({}, prev);
+              updated[word] = objUrl;
+              return updated;
+            });
+          }
+
+          var newReel = {
+            e: (form.e.trim() || "🤟").slice(0, 4),
+            w: word,
+            hi: form.hi.trim().slice(0, 60) || word,
+            c: "Mine",
+            h: 330
+          };
+
+          props.setMine([newReel].concat(props.mine).slice(0, 200));
+          props.setToast("Reel created successfully!");
+          props.onDone();
+        };
+
+        return h`
+          <div class="h-full overflow-y-auto p-6 md:p-10 custom-scrollbar">
+            <div class="max-w-2xl mx-auto">
+              <${Header} 
+                title="Create Custom" 
+                highlight="Sign Reel" 
+                subtitle="Add custom sign vocabulary with optional video recordings." 
+              />
+
+              <div class="glass-card p-6 md:p-8 rounded-3xl mb-8 shadow-2xl">
+                <div class="space-y-4 mb-6">
+                  <div>
+                    <label class="block text-xs font-mono font-bold text-slate-300 uppercase tracking-wider mb-2">Emoji Symbol</label>
+                    <input 
+                      type="text" 
+                      value=${form.e} 
+                      onChange=${function (e) { updateField("e", e.target.value); }}
+                      placeholder="e.g. 🙌" 
+                      maxLength="4"
+                      class="w-full px-4 py-3 rounded-2xl bg-slate-950/60 border border-white/15 text-white focus:outline-none focus:border-amber-400"
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-mono font-bold text-slate-300 uppercase tracking-wider mb-2">English Word / Phrase *</label>
+                    <input 
+                      type="text" 
+                      value=${form.w} 
+                      onChange=${function (e) { updateField("w", e.target.value); }}
+                      placeholder="e.g. Congratulations" 
+                      maxLength="40"
+                      class="w-full px-4 py-3 rounded-2xl bg-slate-950/60 border border-white/15 text-white focus:outline-none focus:border-amber-400"
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-mono font-bold text-slate-300 uppercase tracking-wider mb-2">Hindi Translation</label>
+                    <input 
+                      type="text" 
+                      value=${form.hi} 
+                      onChange=${function (e) { updateField("hi", e.target.value); }}
+                      placeholder="e.g. बधाई हो" 
+                      maxLength="60"
+                      class="w-full px-4 py-3 rounded-2xl bg-slate-950/60 border border-white/15 text-white focus:outline-none focus:border-amber-400"
+                    />
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-mono font-bold text-slate-300 uppercase tracking-wider mb-2">Optional Sign Video Clip</label>
+                    <input 
+                      type="file" 
+                      ref=${fileRef} 
+                      accept="video/*"
+                      class="w-full px-4 py-3 rounded-2xl bg-slate-950/60 border border-white/15 text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-amber-400 file:text-slate-950 hover:file:bg-amber-300"
+                    />
+                  </div>
+                </div>
+
+                <button 
+                  onClick=${handleSubmit}
+                  class="w-full py-4 rounded-2xl font-bold bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-xl shadow-amber-500/20 hover:scale-[1.01] transition-all flex items-center justify-center gap-2"
+                >
+                  <i class="ph-bold ph-plus-circle text-xl"></i> Publish Reel
+                </button>
+              </div>
+
+              <!-- List of My Custom Reels -->
+              ${props.mine.length > 0 && h`
+                <div>
+                  <h3 class="text-lg font-display font-bold text-white mb-4">My Published Reels</h3>
+                  <div class="space-y-3">
+                    ${props.mine.map(function (item, idx) {
+                      return h`
+                        <div key=${item.w + idx} class="glass-card p-4 rounded-2xl flex items-center justify-between border border-white/10">
+                          <div class="flex items-center gap-3">
+                            <span class="text-3xl">${item.e}</span>
+                            <div>
+                              <h4 class="font-bold text-white">${item.w}</h4>
+                              <p class="text-xs text-amber-300">${item.hi}</p>
+                            </div>
+                          </div>
+                          <button 
+                            onClick=${function () {
+                              props.setMine(props.mine.filter(function (_, j) { return j !== idx; }));
+                              props.setToast("Reel deleted.");
+                            }}
+                            class="glass-pill px-3 py-1.5 rounded-xl text-xs font-bold text-rose-400 hover:bg-rose-500/20 transition-all border border-rose-500/30"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      `;
+                    })}
+                  </div>
+                </div>
+              `}
+            </div>
+          </div>
+        `;
+      }
+
+      // --- SIGN MIRROR COMPONENT ---
+      function Mirror(props) {
+        var videoRef = useRef();
+        var streamRef = useRef(null);
+
+        var isActiveState = useState(false);
+        var isActive = isActiveState[0];
+        var setIsActive = isActiveState[1];
+
+        var statusMsgState = useState("Camera stream runs entirely on device.");
+        var statusMsg = statusMsgState[0];
+        var setStatusMsg = statusMsgState[1];
+
+        var stopCamera = function () {
+          if (streamRef.current) {
+            streamRef.current.getTracks().forEach(function (track) { track.stop(); });
+            streamRef.current = null;
+          }
+        };
+
+        useEffect(function () { return stopCamera; }, []);
+
+        var toggleCamera = async function () {
+          if (isActive) {
+            stopCamera();
+            setIsActive(false);
+            return;
+          }
+
+          if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            setStatusMsg("Camera not supported on this browser.");
+            return;
+          }
+
+          try {
+            var stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+            streamRef.current = stream;
+            videoRef.current.srcObject = stream;
+            await videoRef.current.play();
+            setIsActive(true);
+            setStatusMsg("Camera active. Mirror your gestures with accuracy!");
+          } catch (e) {
+            stopCamera();
+            setStatusMsg(e && e.name === "NotAllowedError" ? "Camera permissions blocked." : "Unable to access camera.");
+          }
+        };
+
+        return h`
+          <div class="h-full overflow-y-auto p-6 md:p-10 custom-scrollbar">
+            <div class="max-w-4xl mx-auto">
+              <${Header} 
+                title="Gesture Practice" 
+                highlight="Sign Mirror" 
+                subtitle="Practice hand signs side-by-side using live video webcam mirror." 
+              />
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Target Reference Card -->
+                <div class="glass-card p-6 rounded-3xl flex flex-col items-center justify-center text-center border border-white/10">
+                  <span class="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest mb-4">Target Reference</span>
+                  ${props.practiceReel ? h`
+                    <div class="my-auto">
+                      <span class="text-8xl mb-4 block animate-bounce-subtle">${props.practiceReel.e}</span>
+                      <h3 class="text-4xl font-display font-bold text-white mb-1">${props.practiceReel.w}</h3>
+                      <p class="text-xl text-amber-300 font-bold">${props.practiceReel.hi}</p>
+                    </div>
+                  ` : h`
+                    <div class="my-auto text-slate-500 py-12">
+                      <i class="ph-duotone ph-hand-waving text-6xl mb-3 text-slate-600"></i>
+                      <p class="text-sm font-semibold">Select a reel and click "Practice" to view reference sign here!</p>
+                    </div>
+                  `}
+                </div>
+
+                <!-- Webcam Frame -->
+                <div class="glass-card p-6 rounded-3xl flex flex-col items-center justify-between border border-white/10 min-h-[350px]">
+                  <div class="w-full aspect-video bg-slate-950 rounded-2xl overflow-hidden relative border border-white/10 mb-4 flex items-center justify-center">
+                    <video 
+                      ref=${videoRef} 
+                      playsInline 
+                      muted 
+                      class="w-full h-full object-cover -scale-x-100"
+                    ></video>
+                    ${!isActive && h`
+                      <div class="absolute inset-0 flex flex-col items-center justify-center text-slate-500 p-4 text-center">
+                        <i class="ph-duotone ph-camera text-5xl mb-2 text-slate-600"></i>
+                        <p class="text-xs font-bold">Camera is currently turned off</p>
+                      </div>
+                    `}
+                  </div>
+
+                  <button 
+                    onClick=${toggleCamera}
+                    class=${`w-full py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg active:scale-95 ${
+                      isActive 
+                        ? 'bg-rose-500 text-white shadow-rose-500/30' 
+                        : 'bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-amber-500/20'
+                    }`}
+                  >
+                    <i class=${`ph-bold ${isActive ? 'ph-stop' : 'ph-camera'} text-xl`}></i>
+                    ${isActive ? "Turn Off Camera" : "Start Camera"}
+                  </button>
+                </div>
+              </div>
+
+              <p class="text-xs font-mono font-semibold text-slate-400 flex items-center gap-2">
+                <i class="ph-bold ph-shield-check text-amber-400 text-sm"></i>
+                ${statusMsg}
+              </p>
+            </div>
+          </div>
+        `;
+      }
+
+      // --- MAIN APP COMPONENT ---
+      function App() {
+        var activeTabState = useState("reels");
+        var activeTab = activeTabState[0];
+        var setActiveTab = activeTabState[1];
+
+        var categoryState = useState("All");
+        var category = categoryState[0];
+        var setCategory = categoryState[1];
+
+        var overlayTextState = useState("");
+        var overlayText = overlayTextState[0];
+        var setOverlayText = overlayTextState[1];
+
+        var toastMsgState = useState("");
+        var toastMsg = toastMsgState[0];
+        var setToastMsg = toastMsgState[1];
+
+        var practiceTargetState = useState(null);
+        var practiceTarget = practiceTargetState[0];
+        var setPracticeTarget = practiceTargetState[1];
+
+        var customVideosState = useState({});
+        var customVideos = customVideosState[0];
+        var setCustomVideos = customVideosState[1];
+
+        var mineStore = useStore("ht_mine_reels", []);
+        var mineReels = mineStore[0];
+        var setMineReels = mineStore[1];
+
+        var likedStore = useStore("ht_liked_words", []);
+        var likedWords = likedStore[0];
+        var setLikedWords = likedStore[1];
+
+        var savedStore = useStore("ht_saved_words", []);
+        var savedWords = savedStore[0];
+        var setSavedWords = savedStore[1];
+
+        var phraseStore = useStore("ht_phrases", [
+          "Please speak slowly", 
+          "I am Deaf or Hard of Hearing", 
+          "Please write it down", 
+          "Thank you for your help"
+        ]);
+        var phrases = phraseStore[0];
+        var setPhrases = phraseStore[1];
+
+        var triggerToast = function (msg) {
+          setToastMsg(msg);
+          setTimeout(function () { setToastMsg(""); }, 3000);
+        };
+
+        var handleMirrorPractice = function (reel) {
+          setPracticeTarget(reel);
+          setActiveTab("cam");
+          triggerToast(`Loaded "${reel.w}" for gesture practice!`);
+        };
+
+        var allReels = useMemo(function () {
+          return mineReels.concat(BASE_REELS);
+        }, [mineReels]);
+
+        var filteredList = useMemo(function () {
+          if (category === "All") return allReels;
+          if (category === "Saved") return allReels.filter(function (r) { return savedWords.includes(r.w); });
+          if (category === "Mine") return mineReels;
+          return allReels.filter(function (r) { return r.c === category; });
+        }, [allReels, category, savedWords, mineReels]);
+
+        return h`
+          <div class="flex h-screen w-screen overflow-hidden bg-[#05020c] text-slate-100">
+            
+            <!-- Ambient Backdrop Animation -->
+            <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+              <div class="absolute w-[60vw] h-[60vw] rounded-full bg-violet-700/15 blur-[160px] -top-28 -left-28 animate-aurora-1"></div>
+              <div class="absolute w-[50vw] h-[50vw] rounded-full bg-amber-500/12 blur-[170px] top-1/3 -right-28 animate-aurora-2"></div>
+              <div class="absolute w-[45vw] h-[45vw] rounded-full bg-rose-500/12 blur-[150px] -bottom-28 left-1/3 animate-aurora-3"></div>
+            </div>
+
+            <!-- Navigation Sidebar -->
+            <aside class="w-20 lg:w-64 flex-none z-30 bg-[#05020c]/85 backdrop-blur-2xl border-r border-white/10 flex flex-col justify-between p-4 lg:p-6">
+              <div>
+                <div class="flex items-center gap-3.5 px-2 mb-10">
+                  <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-300 via-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-2xl gold-glow">
+                    🤟
+                  </div>
+                  <div class="hidden lg:block">
+                    <h1 class="font-display font-extrabold text-xl gold-gradient-text leading-tight tracking-tight uppercase">स्पर्शवाणी</h1>
+                    <p class="text-[10px] font-mono font-bold uppercase tracking-widest text-slate-400">SparshVaani Sign App</p>
+                  </div>
+                </div>
+
+                <nav class="space-y-2.5">
+                  ${NAV_ITEMS.map(function (item) {
+                    var isActive = activeTab === item.id;
+                    return h`
+                      <button 
+                        key=${item.id}
+                        onClick=${function () { setActiveTab(item.id); }}
+                        class=${`w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl font-bold text-sm transition-all group ${
+                          isActive 
+                            ? 'bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 text-slate-950 gold-glow scale-[1.02]' 
+                            : 'text-slate-400 hover:text-white hover:bg-white/5'
+                        }`}
+                      >
+                        <i class=${`ph-bold ${item.icon} text-xl group-hover:scale-110 transition-transform ${isActive ? 'text-slate-950' : 'text-slate-400'}`}></i>
+                        <span class="hidden lg:inline tracking-wide">${item.label}</span>
+                      </button>
+                    `;
+                  })}
+                </nav>
+              </div>
+
+              <div class="hidden lg:block glass-card p-4 rounded-2xl border border-white/10">
+                <p class="text-xs font-mono font-bold text-amber-300 mb-1">Keyboard Shortcuts</p>
+                <p class="text-[11px] text-slate-400">Press <code class="px-1 py-0.5 rounded bg-white/10 text-white font-mono">↑</code> / <code class="px-1 py-0.5 rounded bg-white/10 text-white font-mono">↓</code> or <code class="px-1 py-0.5 rounded bg-white/10 text-white font-mono">J</code> / <code class="px-1 py-0.5 rounded bg-white/10 text-white font-mono">K</code> to cycle reels.</p>
+              </div>
+            </aside>
+
+            <!-- Main Stage -->
+            <main class="flex-1 relative z-10 min-w-0 bg-transparent">
+              ${activeTab === "reels" && h`
+                <${Reels} 
+                  list=${filteredList} 
+                  cat=${category} 
+                  setCat=${setCategory} 
+                  liked=${likedWords} 
+                  setLiked=${setLikedWords} 
+                  saved=${savedWords} 
+                  setSaved=${setSavedWords} 
+                  vids=${customVideos} 
+                  onMirrorPractice=${handleMirrorPractice} 
+                />
+              `}
+              ${activeTab === "cap" && h`
+                <${Captions} 
+                  onShowBig=${setOverlayText} 
+                  setToast=${triggerToast} 
+                />
+              `}
+              ${activeTab === "say" && h`
+                <${Speak} 
+                  onShowBig=${setOverlayText} 
+                  phrases=${phrases} 
+                  setPhrases=${setPhrases} 
+                  setToast=${triggerToast} 
+                />
+              `}
+              ${activeTab === "add" && h`
+                <${AddReel} 
+                  mine=${mineReels} 
+                  setMine=${setMineReels} 
+                  setVids=${setCustomVideos} 
+                  onDone=${function () { setCategory("Mine"); setActiveTab("reels"); }} 
+                  setToast=${triggerToast} 
+                />
+              `}
+              ${activeTab === "cam" && h`
+                <${Mirror} 
+                  practiceReel=${practiceTarget} 
+                />
+              `}
+            </main>
+
+            <!-- Fullscreen Overlay -->
+            ${overlayText && h`
+              <div 
+                onClick=${function () { setOverlayText(""); }}
+                class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-2xl flex items-center justify-center p-8 text-center cursor-pointer animate-fade-in"
+              >
+                <div class="max-w-5xl">
+                  <p class="font-display font-extrabold text-4xl sm:text-6xl md:text-8xl gold-gradient-text leading-tight mb-6 tracking-tight">
+                    ${overlayText}
+                  </p>
+                  <span class="glass-pill px-6 py-2.5 rounded-full text-xs font-mono font-bold text-slate-400 border border-white/10">
+                    Tap anywhere to exit
+                  </span>
+                </div>
+              </div>
+            `}
+
+            <!-- Toast Notification -->
+            ${toastMsg && h`
+              <div class="fixed bottom-6 right-6 z-50 glass-card px-5 py-3 rounded-2xl border border-amber-400/40 text-amber-300 font-bold text-sm shadow-2xl flex items-center gap-2">
+                <i class="ph-bold ph-check-circle text-amber-400 text-lg"></i>
+                ${toastMsg}
+              </div>
+            `}
+          </div>
+        `;
+      }
+
+      ReactDOM.createRoot(document.getElementById("root")).render(h`<${App}/>`);
+    })();
+  </script>
+</body>
+</html>
