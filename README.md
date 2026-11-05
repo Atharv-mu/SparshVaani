@@ -1,13 +1,17 @@
 # स्पर्शवाणी (SparshVaani)
-### Making Communication More Accessible and Inclusive
+### Empowering Specially-Abled Individuals Through Accessible Communication
 
 🌐 **Live Website:** https://sparshvaani.onrender.com/
 
 ## About the Project
 
-**SparshVaani** is a web-based communication and learning platform designed to make everyday interactions more accessible and inclusive. It brings together visual learning, speech assistance, live captions, and sign-language practice in a single, easy-to-use application.
+**SparshVaani** is an accessibility-focused web application developed to support specially-abled individuals, particularly those who experience speech, hearing, or communication difficulties.
 
-The platform aims to support individuals with different communication needs by providing simple and interactive tools that encourage independent expression, learning, and participation.
+The platform aims to make communication easier, more inclusive, and more accessible by bringing together visual learning, speech assistance, live captions, and sign-language practice in one place.
+
+Through interactive learning tools and assistive communication features, SparshVaani encourages individuals to express themselves, understand others, and communicate with greater confidence and independence.
+
+The project is built on the belief that communication is a fundamental right and that technology can help create a world where everyone has an opportunity to be heard and understood.
 
 ## Key Features
 
