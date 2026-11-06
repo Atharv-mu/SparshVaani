@@ -124,10 +124,6 @@ The application uses browser permissions to access the microphone and camera whe
 
 User-created content and saved preferences are stored locally in the browser.
 
-## Project Vision
-
-SparshVaani is built around the idea that communication should be accessible to everyone. By combining visual learning, speech technologies, captions, and sign-language practice, the platform aims to create a more inclusive digital experience.
-
 The goal is to make communication tools easier to access while encouraging confidence, independence, and meaningful interaction.
 
 ## Future Scope
